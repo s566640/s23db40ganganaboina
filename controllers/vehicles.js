@@ -28,8 +28,8 @@ exports.vehicles_create_post = async function (req, res) {
     // and require that it be a json object
     // {"costume_type":"goat", "cost":12, "size":"large"}
     document.name = req.body.name;
-    document.mileage = req.body.mileage;
     document.color = req.body.color;
+    document.price = req.body.price;
     try {
         let result = await document.save();
         res.send(result);
