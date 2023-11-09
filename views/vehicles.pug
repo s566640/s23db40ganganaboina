@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-  - var results =[{name:"Royal enfield", color:"Blue", price:150000},{name:"Swift", color:"White", price:200000},{name:"KTM", color: "Red", price:300000}]
+  - let items = results
   div(class="container-fluid")
   div(class="row")
    each v,index  in results 
