@@ -1,7 +1,7 @@
-# f23wb40ganganaboina
+# s23db40ganganaboina
 
 life is so happy
 
-[link to render server](https://f23wb40ganganaboina.onrender.com)
+[link to render server](https://s23db40ganganaboina.onrender.com/)
 
 class vehicles{ String name; String color; integer price; public(String name, String color, integer price) { this.name=name; this.color=color; this.price= price;} }
