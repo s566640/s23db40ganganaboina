@@ -4,6 +4,55 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString, 
+  { useNewUrlParser: true, 
+  useUnifiedTopology: true });
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function () {
+  console.log("Connection to DB succeeded")
+});
+
+var Vehicles = require("./models/vehicles");
+
+async function recreateDB() {
+  // Delete everything
+  await Vehicles.deleteMany();
+  let instance1 = new Vehicles({
+    name: "AUDI", color: "Blue",
+    price: 430000
+  });
+
+  let instance2 = new Vehicles({
+    name: "BMW", color: "Green",
+    price: 63000
+  });
+
+  let instance3 = new Vehicles({
+    name: "BENZ", color: "White",
+    price: 67000
+  });
+
+  const newArray = [instance1.save(), instance2.save(), instance3.save()];
+  Promise.all(newArray).then(doc => {
+    console.log("First object saved")
+    console.log("Second object saved")
+    console.log("Third object saved")
+  }
+  ).catch(err => {
+    console.error(err)
+  });
+}
+let reseed = true;
+if (reseed) { recreateDB(); }
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var vehiclesRouter = require('./routes/vehicles');
