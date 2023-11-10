@@ -4,5 +4,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', vehicles_controller.vehicles_view_all_Page );
+router.get('/vehicles/:id', vehicles_controller.vehicles_detail);
 
 module.exports = router;
