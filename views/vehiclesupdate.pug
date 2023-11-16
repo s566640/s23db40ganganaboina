@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let vehicles_id = toShow._id
+        - let vehicles_name = toShow.name
+        - let vehicles_color = toShow.color
+        - let vehicles_price = toShow.price
+
+        div.col.mb-2(style='background-color: #f0f0f0; padding: 10px;')
+            div.mr-1.col ID is
+            div.col #{vehicles_id}
+            - let actionid = "/resource/vehicles/" + vehicles_id
+            form#vehiclesForm.col-md-6(offset-md-3, style='background-color: #fff; padding: 20px;', action=actionid, method="PUT") 
+                div.form-group
+                    label.vehiclesAttr(for='name') Vehicle Name
+                    input#name.form-control(type='text', name='name', value=vehicles_name)
+                div.form-group
+                    label.vehiclesAttr(for='color') Vehicle color
+                    input#color.form-control(type='text', name='color', value=vehicles_color)
+                div.form-group
+                    label.vehiclesAttr(for='price') Vehicle Price
+                    input#price.form-control(type='number', name='price', value=vehicles_price)
+                input.btn.btn-primary(type="submit", value="Update")
+
+    script.
+        document.forms['vehiclesForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO: Add your Fetch API code here for form submission handling
+             fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+                }).then((resp) => {
+                    return resp.json(); // or resp.text() or whatever the server sends
+                }).then((body) => {
+                    alert("Update succeded")
+                // TODO handle body
+                }).catch((error) => {
+                // TODO handle error
+                    alert("Update failed " + error )
+            });
+        });
